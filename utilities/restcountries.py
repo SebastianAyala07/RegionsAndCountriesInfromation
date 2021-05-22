@@ -1,5 +1,5 @@
 from requests import request
-from encrypt import CustomEncrypting
+from .encrypt import CustomEncrypting
 import random
 
 URL_COUNTRIES_BY_REGION = 'https://restcountries.eu/rest/v2/region/{}'
