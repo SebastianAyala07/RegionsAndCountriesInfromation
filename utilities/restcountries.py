@@ -14,6 +14,5 @@ class WildCard():
         country_selected = response[index]
         name_country = country_selected.get('name')
         language = (country_selected.get('languages'))[0]
-        # print(language)
         language_encrypt = CustomEncrypting.sha1_hexdigest(language.get('name'))
         return (name_country, language_encrypt)
