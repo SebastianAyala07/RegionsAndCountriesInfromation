@@ -3,6 +3,7 @@ from requests import request
 from utilities.restcountries import WildCard
 from time import time
 from utilities.rapidapi import RapidApi
+from db import InteractionsDatabase, Connection
 
 # Dataframe donde se almacenara la informacion completa
 dataframe_info_reg_city = pd.DataFrame(
@@ -36,3 +37,6 @@ print(f'Tiempo maximo: {time_serie.max()}')
 
 dataframe_info_reg_city.to_json('./data/info_execution.json')
 
+Connection.create_db()
+
+InteractionsDatabase.save_info_regions(dataframe_info_reg_city)

@@ -1,5 +1,4 @@
 import sqlite3
-from sqlite3.dbapi2 import connect
 
 STR_CREATE = """
     CREATE TABLE IF NOT EXISTS INFOREGIONS(
@@ -10,6 +9,10 @@ STR_CREATE = """
     )
 """
 
+STR_INSERT = """
+    INSERT INTO INFOREGIONS(region, city_name, language, time) VALUES ({});
+"""
+
 
 class Connection():
 
@@ -18,14 +21,31 @@ class Connection():
         connection = cls.get_conn()
         cursor = connection.cursor()
         cursor.execute(STR_CREATE)
-        cursor.commit()
+        connection.commit()
+        cursor.close()
         connection.close()
 
     @classmethod
-    def get_conn(self):
+    def get_conn(cls):
         return sqlite3.connect('INFOREGIONS.db')
 
 
 class InteractionsDatabase():
 
-    def save_
+    @classmethod
+    def save_info_regions(cls, dataframe):
+        connection = Connection.get_conn()
+        cursor = connection.cursor()
+        try:
+            for series in dataframe.iloc:
+                str_supplementary = ""
+                for record in series:
+                    if f'{type(record)}' == "<class 'numpy.float64'>":
+                        str_supplementary += f'{record}'
+                    else:
+                        str_supplementary += f"\'{record}\',"
+                cursor.execute(STR_INSERT.format(str_supplementary))
+            connection.commit()
+        except:
+            print("An error has occurred at the database level")
+            connection.rollback()
