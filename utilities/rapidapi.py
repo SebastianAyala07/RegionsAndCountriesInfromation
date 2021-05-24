@@ -1,10 +1,11 @@
 from requests import request
 import pandas as pd
+import os
 
 URL_ALL_COUNTRIES = 'https://restcountries-v1.p.rapidapi.com/all'
 
 HEADERS = {
-    'x-rapidapi-key': "8fe403e351msh2659563699216adp13d1b1jsnce039b5dfb46",
+    'x-rapidapi-key': os.environ['APIKEY'],
     'x-rapidapi-host': "restcountries-v1.p.rapidapi.com"
 }
 
